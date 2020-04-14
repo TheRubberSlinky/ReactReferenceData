@@ -26,3 +26,17 @@ E:\TRISTAN\Repos\React-Reference-Data\DecoupledProjectAPI\DecoupledProjectAPI\ob
 E:\TRISTAN\Repos\React-Reference-Data\DecoupledProjectAPI\DecoupledProjectAPI\obj\Debug\netcoreapp2.2\DecoupledProjectAPI.RazorTargetAssemblyInfo.cache
 E:\TRISTAN\Repos\React-Reference-Data\DecoupledProjectAPI\DecoupledProjectAPI\obj\Debug\netcoreapp2.2\DecoupledProjectAPI.dll
 E:\TRISTAN\Repos\React-Reference-Data\DecoupledProjectAPI\DecoupledProjectAPI\obj\Debug\netcoreapp2.2\DecoupledProjectAPI.pdb
+E:\TRISTAN\Repos\ReactReferenceData\DecoupledProjectAPI\DecoupledProjectAPI\bin\Debug\netcoreapp2.2\DecoupledProjectAPI.deps.json
+E:\TRISTAN\Repos\ReactReferenceData\DecoupledProjectAPI\DecoupledProjectAPI\bin\Debug\netcoreapp2.2\DecoupledProjectAPI.runtimeconfig.json
+E:\TRISTAN\Repos\ReactReferenceData\DecoupledProjectAPI\DecoupledProjectAPI\bin\Debug\netcoreapp2.2\DecoupledProjectAPI.runtimeconfig.dev.json
+E:\TRISTAN\Repos\ReactReferenceData\DecoupledProjectAPI\DecoupledProjectAPI\bin\Debug\netcoreapp2.2\DecoupledProjectAPI.dll
+E:\TRISTAN\Repos\ReactReferenceData\DecoupledProjectAPI\DecoupledProjectAPI\bin\Debug\netcoreapp2.2\DecoupledProjectAPI.pdb
+E:\TRISTAN\Repos\ReactReferenceData\DecoupledProjectAPI\DecoupledProjectAPI\obj\Debug\netcoreapp2.2\DecoupledProjectAPI.csprojAssemblyReference.cache
+E:\TRISTAN\Repos\ReactReferenceData\DecoupledProjectAPI\DecoupledProjectAPI\obj\Debug\netcoreapp2.2\DecoupledProjectAPI.csproj.CoreCompileInputs.cache
+E:\TRISTAN\Repos\ReactReferenceData\DecoupledProjectAPI\DecoupledProjectAPI\obj\Debug\netcoreapp2.2\DecoupledProjectAPI.RazorAssemblyInfo.cache
+E:\TRISTAN\Repos\ReactReferenceData\DecoupledProjectAPI\DecoupledProjectAPI\obj\Debug\netcoreapp2.2\DecoupledProjectAPI.RazorAssemblyInfo.cs
+E:\TRISTAN\Repos\ReactReferenceData\DecoupledProjectAPI\DecoupledProjectAPI\obj\Debug\netcoreapp2.2\DecoupledProjectAPI.AssemblyInfoInputs.cache
+E:\TRISTAN\Repos\ReactReferenceData\DecoupledProjectAPI\DecoupledProjectAPI\obj\Debug\netcoreapp2.2\DecoupledProjectAPI.AssemblyInfo.cs
+E:\TRISTAN\Repos\ReactReferenceData\DecoupledProjectAPI\DecoupledProjectAPI\obj\Debug\netcoreapp2.2\DecoupledProjectAPI.RazorTargetAssemblyInfo.cache
+E:\TRISTAN\Repos\ReactReferenceData\DecoupledProjectAPI\DecoupledProjectAPI\obj\Debug\netcoreapp2.2\DecoupledProjectAPI.dll
+E:\TRISTAN\Repos\ReactReferenceData\DecoupledProjectAPI\DecoupledProjectAPI\obj\Debug\netcoreapp2.2\DecoupledProjectAPI.pdb

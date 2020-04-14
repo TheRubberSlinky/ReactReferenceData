@@ -12942,11 +12942,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\TRISTAN\\Repos\\React-Reference-Data\\DecoupledProjectAPI\\DecoupledProjectAPI\\DecoupledProjectAPI.csproj",
+      "projectUniqueName": "E:\\TRISTAN\\Repos\\ReactReferenceData\\DecoupledProjectAPI\\DecoupledProjectAPI\\DecoupledProjectAPI.csproj",
       "projectName": "DecoupledProjectAPI",
-      "projectPath": "E:\\TRISTAN\\Repos\\React-Reference-Data\\DecoupledProjectAPI\\DecoupledProjectAPI\\DecoupledProjectAPI.csproj",
+      "projectPath": "E:\\TRISTAN\\Repos\\ReactReferenceData\\DecoupledProjectAPI\\DecoupledProjectAPI\\DecoupledProjectAPI.csproj",
       "packagesPath": "C:\\Users\\RedScreen\\.nuget\\packages\\",
-      "outputPath": "E:\\TRISTAN\\Repos\\React-Reference-Data\\DecoupledProjectAPI\\DecoupledProjectAPI\\obj\\",
+      "outputPath": "E:\\TRISTAN\\Repos\\ReactReferenceData\\DecoupledProjectAPI\\DecoupledProjectAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
