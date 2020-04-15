@@ -5,11 +5,6 @@ import "antd/dist/antd.css";
 //import { GetTreeData, GetTreeChildren } from "./MockData";
 import { UserOutlined, HomeOutlined } from "@ant-design/icons";
 
-//fixed calls
-const rootURLCall = "https://localhost:5001/api/trees";
-const childURLCall = "https://localhost:5001/api/trees/";
-const searchURLCall = "https://localhost:5001/api/tree/";
-
 //constants
 const Search = Input.Search;
 
@@ -26,11 +21,10 @@ const layout = {
 //fixed pre load data
 const baseTree = [{ title: "Branch1", key: "1", isLeaf: false }];
 
-export function BranchTree(props) {
+export function TreeTree(props) {
   //hooks
   const [treeData, setTreeData] = useState(baseTree);
   const [RCData, setRCData] = useState([]);
-  const [isLoading, setisLoading] = useState(true);
 
   //update with new children
   function updateTreeData(list, key, children) {
@@ -51,7 +45,7 @@ export function BranchTree(props) {
   //call to get root object
   function GetRoot() {
     let obj = [];
-    fetch(rootURLCall, {
+    fetch(props.rootURLCall, {
       method: "GET",
       headers: new Headers({
         Accept: "application/vnd.github.cloak-preview",
@@ -74,12 +68,11 @@ export function BranchTree(props) {
         console.log(error);
         return obj;
       });
-    setisLoading(false);
   }
 
   //async call to get children objects
   async function GetChildNodes(ParentKey) {
-    const url = `${childURLCall}${ParentKey}`;
+    const url = `${props.childURLCall}${ParentKey}`;
     let obj = [];
     const response = await fetch(url, {
       method: "GET",
@@ -109,37 +102,15 @@ export function BranchTree(props) {
     });
   }
 
-  //async function to search the tree
-  async function treeSearch(e) {
-    setTreeData(baseTree);
-    if (e != "") {
-      const url = `${searchURLCall}${e}`;
-      let obj = [];
-      const response = await fetch(url, {
-        method: "GET",
-      });
-      const json = await response.json();
-      json.map((Main) => {
-        obj.push({
-          title: Main.data[2].value,
-          key: Main.data[1].value,
-          icon:
-            Main.data[3].value === "0" ? <HomeOutlined /> : <UserOutlined />,
-          isLeaf: Main.data[3].value === "0" ? false : true,
-        });
-      });
-      setTreeData(obj);
+  //reset tree data each time rootBranch gets updated
+  useEffect(() => {
+    debugger;
+    if (props.data.length !== 0) {
+      setTreeData(props.data);
     } else {
       setTreeData(GetRoot());
     }
-    //search and then update the hook for the rootbranch
-    //disable loading icon
-  }
-
-  //reset tree data each time rootBranch gets updated
-  useEffect(() => {
-    setTreeData(GetRoot());
-  }, [props.rootBranch]);
+  }, [props.data]);
 
   //Right click menu
   const menu = (
@@ -248,37 +219,29 @@ export function BranchTree(props) {
   };
 
   return (
-    <Layout>
-      <Spin spinning={isLoading}>
-        <Search
-          placeholder="search..."
-          enterButton="Search"
-          size="medium"
-          onSearch={treeSearch}
+    <Dropdown overlay={menu} trigger={["contextMenu"]}>
+      <div>
+        <Tree
+          {...layout}
+          showIcon={true}
+          style={{ height: "auto", minHeight: "570px" }}
+          loadData={onLoadData}
+          onSelect={props.onSelect}
+          treeData={treeData}
+          defaultExpandAll={false}
+          draggable
+          onDragEnter={onDragEnter}
+          onDrop={onDrop}
+          onRightClick={onRC}
         />
-
-        <Dropdown overlay={menu} trigger={["contextMenu"]}>
-          <div>
-            <Tree
-              {...layout}
-              showIcon={true}
-              style={{ height: "auto", minHeight: "570px" }}
-              loadData={onLoadData}
-              onSelect={props.onSelect}
-              treeData={treeData}
-              defaultExpandAll={false}
-              draggable
-              onDragEnter={onDragEnter}
-              onDrop={onDrop}
-              onRightClick={onRC}
-            />
-          </div>
-        </Dropdown>
-      </Spin>
-    </Layout>
+      </div>
+    </Dropdown>
   );
 }
-BranchTree.propTypes = {
+TreeTree.propTypes = {
+  data: PropTypes.array.isRequired,
+  rootURLCall: PropTypes.string.isRequired,
+  childURLCall: PropTypes.string.isRequired,
   rootBranch: PropTypes.string.isRequired,
   onSelect: PropTypes.func.isRequired,
   onRightClick: PropTypes.func.isRequired,

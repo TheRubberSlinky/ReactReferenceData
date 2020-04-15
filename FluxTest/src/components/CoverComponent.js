@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Demo } from "./AntTree";
-import { BranchTree } from "./AsyncTree";
+//import { BranchTree } from "./AsyncTree";
 import { Layout, Col, Spin, Row } from "antd";
 import { GeneralDisplayPage } from "./GeneralManage";
 import { Link } from "react-router-dom";
 import { loadCourses, deleteCourse } from "../actions/courseActions";
+import { BranchTree } from "./Tree/TreeCover";
 
 function CoverPage() {
   const [KeySelected, setKeySelected] = useState({
