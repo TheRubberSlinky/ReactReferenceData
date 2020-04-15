@@ -19,7 +19,8 @@ export function BranchTree(props) {
   const [search, setSearch] = useState("");
 
   function TreeUpdate(e) {
-    setTreeData(e);
+    if (!e) setTreeData([]);
+    else setTreeData(e);
   }
 
   //reset tree data each time rootBranch gets updated

@@ -104,7 +104,6 @@ export function TreeTree(props) {
 
   //reset tree data each time rootBranch gets updated
   useEffect(() => {
-    debugger;
     if (props.data.length !== 0) {
       setTreeData(props.data);
     } else {
