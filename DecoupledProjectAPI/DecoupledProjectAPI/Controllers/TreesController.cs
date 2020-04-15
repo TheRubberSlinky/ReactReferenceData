@@ -61,42 +61,51 @@ namespace DecoupledProjectAPI.Controllers
 
             using (SqlConnection myConnection = new SqlConnection(con))
             {
-                string oString = $"select ID,  cast(BranchCode as varchar(50)) 'code', BranchName 'name', 0 'isLeaf' from Branches where ParentBranch = " + key +
-                    $"union all " +
-                    $"select ID, NBNo 'code', CONCAT(Name, ' ', Surname) 'name', 1 'isLeaf' from employees where Branch = " + key;
-                SqlCommand oCmd = new SqlCommand(oString, myConnection);
-                myConnection.Open();
-                using (SqlDataReader oReader = oCmd.ExecuteReader())
+                try
                 {
-                    while (oReader.Read())
+                    string oString = $"select ID,  cast(BranchCode as varchar(50)) 'code', BranchName 'name', 0 'isLeaf' from Branches where ParentBranch = " + key +
+                        $" union all " +
+                        $"select ID, NBNo 'code', CONCAT(Name, ' ', Surname) 'name', 1 'isLeaf' from employees where Branch = " + key;
+                    
+                    SqlCommand oCmd = new SqlCommand(oString, myConnection);
+                    myConnection.Open();
+                    using (SqlDataReader oReader = oCmd.ExecuteReader())
                     {
-                        GenResponse rpsn = new GenResponse();
-                        rpsn.Data = new List<GenResponseObj>();
-                        rpsn.key = oReader["code"].ToString();
-                        for (int i = 0; i < oReader.FieldCount; i++)
+                        while (oReader.Read())
                         {
-                            var value = oReader[i];
-
-                            rpsn.Data.Add(new GenResponseObj()
+                            GenResponse rpsn = new GenResponse();
+                            rpsn.Data = new List<GenResponseObj>();
+                            rpsn.key = oReader["code"].ToString();
+                            for (int i = 0; i < oReader.FieldCount; i++)
                             {
-                                name = oReader.GetName(i),
-                                value = oReader[i].ToString()
-                            });
-                        }
-                        rspns.Add(rpsn);
-                    }
+                                var value = oReader[i];
 
-                    myConnection.Close();
+                                rpsn.Data.Add(new GenResponseObj()
+                                {
+                                    name = oReader.GetName(i),
+                                    value = oReader[i].ToString()
+                                });
+                            }
+                            rspns.Add(rpsn);
+                        }
+
+                        myConnection.Close();
+                    }
+                }
+                catch
+                {
+                    return new BadRequestResult();
                 }
             }
             return Ok(rspns.ToArray());
         }
 
+
         // POST: api/Trees
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
+        //[HttpPost]
+        //public void Post([FromBody] string value)
+        //{
+        //}
 
         // PUT: api/Trees/5
         [HttpPut("{id}")]

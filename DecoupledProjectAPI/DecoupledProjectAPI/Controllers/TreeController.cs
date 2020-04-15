@@ -12,8 +12,9 @@ namespace DecoupledProjectAPI.Controllers
     [ApiController]
     public class TreeController : ControllerBase
     {
-        [HttpGet]
-        public ActionResult GetTreeHeads(string code, int type)
+        //[HttpGet]
+        [HttpGet("{key}", Name = "SearchValue")]
+        public ActionResult Get(string key)
         {
             string con = "Server=localhost;Database=React_DB;Trusted_Connection=True;";
 
@@ -21,9 +22,7 @@ namespace DecoupledProjectAPI.Controllers
 
             using (SqlConnection myConnection = new SqlConnection(con))
             {
-                string oString = $"Select * from Branches where BranchCode = '{code}'";
-                if (type == 1)
-                    oString = $"select * from employees where nbno = '{code}'";
+                string oString = $"select ID,  cast(BranchCode as varchar(50)) 'code', BranchName 'name', 0 'isLeaf' from Branches where BranchName like '%" + key + "%'";
                 SqlCommand oCmd = new SqlCommand(oString, myConnection);
                 myConnection.Open();
                 using (SqlDataReader oReader = oCmd.ExecuteReader())
@@ -32,7 +31,7 @@ namespace DecoupledProjectAPI.Controllers
                     {
                         GenResponse rpsn = new GenResponse();
                         rpsn.Data = new List<GenResponseObj>();
-                        rpsn.key = oReader[1].ToString();
+                        rpsn.key = oReader["code"].ToString();
                         for (int i = 0; i < oReader.FieldCount; i++)
                         {
                             var value = oReader[i];
@@ -51,8 +50,8 @@ namespace DecoupledProjectAPI.Controllers
             }
             return Ok(rspns.ToArray());
         }
-        
-        
+
+
     }
 
     public class GenResponse

@@ -7,26 +7,26 @@ import {
   getSpecificEmployeeByKey,
   getSpecificBranchByKey,
   PostData,
-  GetTreeData
+  GetTreeData,
 } from "./MockData";
 
 const layout = {
   labelCol: {
-    span: 8
+    span: 8,
   },
   wrapperCol: {
-    span: 16
-  }
+    span: 16,
+  },
 };
 const validateMessages = {
   required: "This field is required!",
   types: {
     email: "Not a validate email!",
-    number: "Not a validate number!"
+    number: "Not a validate number!",
   },
   number: {
-    range: "Must be between ${min} and ${max}"
-  }
+    range: "Must be between ${min} and ${max}",
+  },
 };
 const defaultBranch = [
   {
@@ -34,22 +34,22 @@ const defaultBranch = [
     data: [
       {
         name: "BranchCode",
-        value: ""
+        value: "",
       },
       {
         name: "BranchName",
-        value: ""
+        value: "",
       },
       {
         name: "BranchCategory",
-        value: ""
+        value: "",
       },
       {
         name: "ParentBranch",
-        value: ""
-      }
-    ]
-  }
+        value: "",
+      },
+    ],
+  },
 ];
 const defaultEmployee = [
   {
@@ -57,23 +57,23 @@ const defaultEmployee = [
     data: [
       {
         name: "EmployeeNumber",
-        value: ""
+        value: "",
       },
       {
         name: "EmployeeName",
-        value: ""
+        value: "",
       },
       {
         name: "EmployeeSurname",
-        value: ""
+        value: "",
       },
       {
         name: "EmployeeLastLoggedIn",
-        value: ""
+        value: "",
       },
       {
         name: "EmployeeID",
-        value: ""
+        value: "",
       },
       {
         name: "EmployeeBranch",
@@ -82,20 +82,20 @@ const defaultEmployee = [
           { value: "Branch2" },
           { value: "Branch3" },
           { value: "Branch4" },
-          { value: "Branch5" }
-        ]
-      }
-    ]
-  }
+          { value: "Branch5" },
+        ],
+      },
+    ],
+  },
 ];
 const { Option } = Select;
 export function GeneralDisplayPage(props) {
   const [form] = Form.useForm();
-  const [data, setData] = useState(defaultBranch);
+  const [data, setData] = useState(defaultEmployee);
 
   let Data = defaultBranch;
 
-  const onFinish = values => {
+  const onFinish = (values) => {
     console.log(props.type, props.isEdit, values);
     PostData(props.type, props.isEdit, values);
     //post it
@@ -158,7 +158,7 @@ export function GeneralDisplayPage(props) {
   }, []);
   return (
     <Layout>
-      {data.map(memes => {
+      {data.map((memes) => {
         return (
           <>
             <h2>
@@ -173,12 +173,12 @@ export function GeneralDisplayPage(props) {
               onFinish={onFinish}
               validateMessages={validateMessages}
             >
-              {memes.data.map(field => {
+              {memes.data.map((field) => {
                 return Array.isArray(field.value) ? (
                   <div>
                     {field.name}
                     <Select name={field.name} style={{ width: "65%" }}>
-                      {field.value.map(option => {
+                      {field.value.map((option) => {
                         return (
                           <Option value={option.value}>{option.value}</Option>
                         );
@@ -207,7 +207,7 @@ export function GeneralDisplayPage(props) {
 GeneralDisplayPage.propTypes = {
   GenKey: PropTypes.string.isRequired,
   isEdit: PropTypes.bool.isRequired,
-  type: PropTypes.string.isRequired
+  type: PropTypes.string.isRequired,
 };
 
 export default GeneralDisplayPage;

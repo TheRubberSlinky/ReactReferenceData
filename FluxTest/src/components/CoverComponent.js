@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Demo } from "./AntTree";
+import { BranchTree } from "./AsyncTree";
 import { Layout, Col, Spin, Row } from "antd";
 import { GeneralDisplayPage } from "./GeneralManage";
 import { Link } from "react-router-dom";
@@ -9,7 +10,7 @@ function CoverPage() {
   const [KeySelected, setKeySelected] = useState({
     key: "1",
     isEdit: true,
-    type: "Branch"
+    type: "Branch",
   });
 
   const { Content } = Layout;
@@ -27,7 +28,7 @@ function CoverPage() {
       setKeySelected({
         key: selectedKeys[0],
         isEdit: true,
-        type: type.node.isLeaf ? "Employee" : "Branch"
+        type: type.node.isLeaf ? "Employee" : "Branch",
       });
     }
   };
@@ -40,7 +41,12 @@ function CoverPage() {
           <Row gutter={16} style={{ height: "100%", minHeight: "600px" }}>
             <Col span={1}></Col>
             <Col span={6}>
-              <Demo mySelect={onChange} myClick={onClick} />
+              <BranchTree
+                onSelect={onChange}
+                onRightClick={onClick}
+                rootBranch="7"
+              />
+              {/* <Demo mySelect={onChange} myClick={onClick} /> */}
             </Col>
             <Col span={13}>
               <GeneralDisplayPage
