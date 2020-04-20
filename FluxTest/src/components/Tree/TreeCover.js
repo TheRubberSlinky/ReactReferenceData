@@ -5,13 +5,19 @@ import "antd/dist/antd.css";
 //import { GetTreeData, GetTreeChildren } from "./MockData";
 import { UserOutlined, HomeOutlined } from "@ant-design/icons";
 import { TreeTree } from "./Tree";
-import { TreeSearch } from "./TreeSearch";
+import { testSearch } from "./TreeSearch";
+import { UpdateCall, treeSearch } from "./calls";
 
 //fixed calls
-const rootURLCall = "https://localhost:5001/api/trees";
-const childURLCall = "https://localhost:5001/api/trees/";
-const searchURLCall = "https://localhost:5001/api/tree/";
+const rootURLCall = "https://localhost:5001/api/trees/"; //link to getting the root branches
+const childURLCall = "https://localhost:5001/api/trees/"; //link to getting the children
+const searchURLCall = "https://localhost:5001/api/tree/"; //link to search
+const getEmployeeInfoCall = ""; //link to get all employee info
+const getBranchInfoCall = ""; //link to get all branch info
+const updateBranchCall = ""; //link to update the branch
+const updateEmployeeCall = ""; //link to update the employee
 
+const Search = Input.Search;
 export function BranchTree(props) {
   //hooks
   const [treeData, setTreeData] = useState([]);
@@ -23,17 +29,46 @@ export function BranchTree(props) {
     else setTreeData(e);
   }
 
+  //async function to search the tree
+  async function mainSearch(e) {
+    if (e != "") {
+      //const url = `${props.searchURLCall}${e}`;
+      const obj = await treeSearch(searchURLCall, e);
+      TreeUpdate(obj);
+    } else {
+      TreeUpdate();
+    }
+  }
+
+  async function UpdateDrag(dragNode, node) {
+    // await UpdateCall(
+    //   getEmployeeInfoCall,
+    //   updateEmployeeCall,
+    //   getBranchInfoCall,
+    //   updateBranchCall,
+    //   node,
+    //   dragNode
+    // );
+  }
+
   //reset tree data each time rootBranch gets updated
   useEffect(() => {}, [props.rootBranch]);
 
   return (
     <Layout>
       <Spin spinning={isLoading}>
-        <TreeSearch searchURLCall={searchURLCall} UpdateTree={TreeUpdate} />
+        {/* <Search searchURLCall={searchURLCall} UpdateTree={TreeUpdate} /> */}
 
+        <Search
+          placeholder="search..."
+          enterButton="Search"
+          size="medium"
+          onSearch={mainSearch}
+        />
         <TreeTree
           data={treeData}
           rootBranch="0"
+          UpdateDrag={UpdateDrag}
           onRightClick={props.onRightClick}
           onSelect={props.onSelect}
           rootURLCall={rootURLCall}

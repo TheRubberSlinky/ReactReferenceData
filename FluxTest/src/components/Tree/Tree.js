@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import "antd/dist/antd.css";
 //import { GetTreeData, GetTreeChildren } from "./MockData";
 import { UserOutlined, HomeOutlined } from "@ant-design/icons";
+import { GetChildNodes } from "./calls";
 
 //constants
 const Search = Input.Search;
@@ -54,12 +55,21 @@ export function TreeTree(props) {
       .then((res) => res.json())
       .then((response) => {
         response.map((Main) => {
+          //   obj.push({
+          //     title: Main.name,
+          //     key: Main.id,
+          //     icon: <HomeOutlined />,
+          //     isLeaf: false,
+          //   });
+
           obj.push({
+            //update this to represent his code
             title: Main.data[0].value,
             key: Main.data[1].value,
             icon:
               Main.data[2].value === "0" ? <HomeOutlined /> : <UserOutlined />,
             isLeaf: Main.data[2].value === "0" ? false : true,
+            //loaded: false,
           });
         });
         setTreeData(obj);
@@ -70,28 +80,9 @@ export function TreeTree(props) {
       });
   }
 
-  //async call to get children objects
-  async function GetChildNodes(ParentKey) {
-    const url = `${props.childURLCall}${ParentKey}`;
-    let obj = [];
-    const response = await fetch(url, {
-      method: "GET",
-    });
-    const json = await response.json();
-    json.map((Main) => {
-      obj.push({
-        title: Main.data[2].value,
-        key: Main.data[1].value,
-        icon: Main.data[3].value === "0" ? <HomeOutlined /> : <UserOutlined />,
-        isLeaf: Main.data[3].value === "0" ? false : true,
-      });
-    });
-    return obj;
-  }
-
   //async function to find new children
   async function onLoadData({ key, children }) {
-    const childNodes = await GetChildNodes(key);
+    const childNodes = await GetChildNodes(props.childURLCall, key);
     return new Promise((resolve) => {
       if (children) {
         resolve();
@@ -115,7 +106,7 @@ export function TreeTree(props) {
   const menu = (
     <Menu>
       {/* see if it is a branch, if it is, allow add new branch and add new employee */}
-      {!RCData.isLeaf ? (
+      {RCData.isBranch ? (
         <Menu.Item
           key="1"
           onClick={() => props.onRightClick("Branch", RCData.key)}
@@ -125,7 +116,7 @@ export function TreeTree(props) {
       ) : (
         ""
       )}
-      {!RCData.isLeaf ? (
+      {RCData.isBranch ? (
         <Menu.Item
           key="2"
           onClick={() => props.onRightClick("Employee", RCData.key)}
@@ -150,13 +141,23 @@ export function TreeTree(props) {
   };
   //on drop, make a popup ask if they are sure they want to move X to Y
   const onDrop = (info) => {
+    if (info.node.isLeaf) {
+      return;
+    }
+    console.log(info.node);
+    console.log(info.dragNode);
+    debugger;
+    const dPos = info.node.props.pos.split("-");
+    const test = info.dragNode.props.pos.split("-");
+    const tst = info.dragNode.props.pos.indexOf(info.node.props.pos);
+    //ensure the node is being dragged to a new item, instead of the same position
+    alert(test);
     if (
       !window.confirm(
         `Are you sure you wish to move ${info.dragNode.title} into ${info.node.title}`
       )
     )
       return;
-    console.log(info);
     console.log(`DragNode: ${info.dragNode.title}   Node: ${info.node.title}`);
     const dropKey = info.node.props.eventKey;
     const dragKey = info.dragNode.props.eventKey;
@@ -213,6 +214,8 @@ export function TreeTree(props) {
         ar.splice(i + 1, 0, dragObj);
       }
     }
+
+    props.UpdateDrag(info.dragNode, info.node);
     //update actual system as well, if it works then set the tree data
     setTreeData(data);
   };
@@ -228,6 +231,8 @@ export function TreeTree(props) {
           onSelect={props.onSelect}
           treeData={treeData}
           defaultExpandAll={false}
+          allowClear={true}
+          loadedKeys={[]}
           draggable
           onDragEnter={onDragEnter}
           onDrop={onDrop}
@@ -241,6 +246,7 @@ TreeTree.propTypes = {
   data: PropTypes.array.isRequired,
   rootURLCall: PropTypes.string.isRequired,
   childURLCall: PropTypes.string.isRequired,
+  UpdateDrag: PropTypes.func.isRequired,
   rootBranch: PropTypes.string.isRequired,
   onSelect: PropTypes.func.isRequired,
   onRightClick: PropTypes.func.isRequired,
